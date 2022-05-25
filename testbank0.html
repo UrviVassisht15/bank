@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <style media="screen">
+      *,
+*:before,
+*:after{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.background{
+    background-image: url("bankbg0.jpg");
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    left: 50%;
+    top: 50%;
+    background-size:cover;
+}
+.background .shape{
+    height: 200px;
+    width: 200px;
+    position: absolute;
+    border-radius: 50%;
+}
+.form{
+    height: 700px;
+    width: 400px;
+    background-color: rgba(255,255,255,0.13);
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 30%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    padding: 50px 35px;
+}
+.form *{
+    font-family: 'Poppins',sans-serif;
+    color: #080710;
+    letter-spacing: 0.5px;
+    outline: none;
+    border: none;
+}
+.form h3{
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 42px;
+    text-align: center;
+}
+.form h5{
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 42px;
+    text-align: center;
+}
+.form h6{
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 42px;
+}
+label{
+    display: block;
+    margin-top: 30px;
+    font-size: 16px;
+    font-weight: 500;
+}
+input{
+    display: block;
+    height: 50px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.07);
+    border-radius: 3px;
+    padding: 0 10px;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 300;
+}
+::placeholder{
+    color: #e5e5e5;
+}
+.button{
+    margin-top: 50px;
+    width: 50%;
+    background-color: #ffffff;
+    color: #080710;
+    padding: 15px 1px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right:10px;
+}
+.signout_button{
+    margin-top: 10px;
+    width: 40%;
+    background-color: #724729d6;
+    color: #ffffff;
+    padding: 15px 1px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 28px;
+    cursor: pointer;
+    margin-right:10px;
+}
+.divbutton{
+	display:flex;
+}
+.next_button{
+    margin-top: -20px;
+    width: 60px;
+    height:60px;
+    background-color: #724729d6;
+    color: #ffffff;
+    padding: 15px 1px;
+    font-size: 20px;
+    font-weight: bolder;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-left:270px; 
+}
+
+.new{
+	visibility:hidden;
+}
+    </style>
+</head>
+<script>
+    let id;
+    let data;
+    let pass;
+    let waste;
+    function auto()
+        {
+            id=localStorage.getItem("user");
+            localStorage.removeItem("user");
+            data=JSON.parse(localStorage.getItem(id));
+            pass=data[0];
+        }
+    function yes() 
+    {
+        let accno = Math.floor((Math.random() * 99999) + 10000);
+        document.getElementById("acc_no").style.visibility = "visible";
+		document.getElementById("acc_no_text").style.visibility = "visible";
+        document.getElementById("acc_no_text").value=accno;
+        data[1]=accno;
+        localStorage.setItem(id,JSON.stringify([pass,accno,0]));
+        document.getElementById("next").style.visibility = "visible";
+		document.getElementById("next_button").style.visibility = "visible";
+        localStorage.setItem("user",id);
+        
+    } 
+    function no() 
+    {
+        document.getElementById("sign_out").style.visibility = "visible";
+		document.getElementById("sign_out_button").style.visibility = "visible";
+    }    
+</script>
+
+<body onload="auto()">
+    <div class="background">
+    </div>
+    <div class="form">
+	<h3>WELCOME!</h3>   
+        <br><br>
+            <h5>Do you wanna create an account?</h5>
+	            <div class="divbutton">
+  	                <button onclick="no()"class="button">No</button>
+	                <button onclick="yes()"class="button">Yes</button>
+	            </div>
+                <label class="new" for="acc_no" id="acc_no">Account No.</label>
+                <input class="new" type="text" placeholder="Account Number" id="acc_no_text">
+                <label class="new" for="sign_out" id="sign_out"><h6>Do you want to sign out?</h6></label>
+                <button onclick="javascript:window.location.href='file:///C:/Users/Tanish/OneDrive/Desktop/%E2%80%8E/Js%20Programms/bankty.html'" class="new signout_button" id="sign_out_button">
+                    Sign out
+                </button>
+                <label class="new" for="next" id="next">
+                    <h6>Proceed to your account</h6>   
+                </label>
+                <button onclick="javascript:window.location.href='file:///C:/Users/Tanish/OneDrive/Desktop/%E2%80%8E/Js%20Programms/bank/testbank1.html'" class="new next_button" id="next_button">-></button>
+    </div>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <style media="screen">
+      *,
+*:before,
+*:after{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.background{
+    background-image: url("bankbg1.jpg");
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    left: 50%;
+    top: 50%;
+    background-size:cover;
+}
+.background .shape{
+    height: 200px;
+    width: 200px;
+    position: absolute;
+    border-radius: 50%;
+}
+.form{
+    height: 700px;
+    width: 400px;
+    background-color: rgba(255,255,255,0.13);
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 30%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    padding: 50px 35px;
+}
+.form *{
+    font-family: 'Poppins',sans-serif;
+    color: #080710;
+    letter-spacing: 0.5px;
+    outline: none;
+    border: none;
+}
+.form h3{
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 42px;
+    text-align: center;
+}
+
+label{
+    display: block;
+    margin-top: 30px;
+    font-size: 16px;
+    font-weight: 500;
+}
+input{
+    display: block;
+    height: 50px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.07);
+    border-radius: 3px;
+    padding: 0 10px;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 300;
+}
+::placeholder{
+    color: #e5e5e5;
+}
+.button{
+    margin-top: 30px;
+    width: 50%;
+    background-color: #ffffff;
+    color: #080710;
+    padding: 15px 1px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right:10px;
+}
+.divbutton{
+	display:flex;
+}
+.unstyled-input {
+    display: block;
+    height: 50px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.07);
+    border-radius: 3px;
+    padding: 0 10px;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 300;
+    border:none;
+    border-bottom: 2px solid rgb(82, 43, 96);
+}
+.new{
+	visibility:hidden;
+}
+.flex-container {
+  display: flex;
+}
+.butt{
+    display: block;
+    height: 20px;
+    width: 50%;
+    background-color:none;
+    border-radius: 0px;
+    padding: 0 10px;
+    margin-top: 32px;
+    margin-left: 18px;
+    font-size: 14px;
+    font-weight: 300;
+    border:none;
+    font-weight: bolder;
+    border-top:2px solid rgba(0, 0, 0);
+    border-bottom: 2px solid rgb(0, 0, 0);
+}
+.dash{
+    margin-left: 48px;
+}
+    </style>
+</head>
+<script>
+        let data;
+        let bal=0;
+        let id;
+        let acc;
+        let pass;
+        
+        function show()
+        {
+            id=localStorage.getItem("user");
+            localStorage.removeItem("user");
+            data=JSON.parse(localStorage.getItem(id));
+            pass=data[0];
+            acc=data[1];
+            document.getElementById("acc_no").value=acc;
+            console.log(data);
+            bal=parseFloat(data[2]);
+        }
+		function check()
+		{
+            document.getElementById("balance").value=bal;
+		}
+		function deposit()
+		{
+            let depamount=parseFloat(document.getElementById("amount").value);
+            alert(depamount);
+            console.log(depamount);
+            if(depamount==NaN)//not working
+            {
+                alert("Please enter amount to deposit");
+            }
+            else    
+            {
+                bal=bal+depamount;
+                data[2]=bal;
+                localStorage.setItem(id,JSON.stringify([pass,acc,bal]));
+                document.getElementById("balance").value=bal;
+            }
+		}
+        function withdraw()
+		{
+			let withamount=document.getElementById("amount").value;
+            if(withamount==null)
+            {
+                alert("Please enter amount to withdraw");
+            }
+            else
+            {
+                if(bal>withamount)
+                {
+                    bal=data[2];
+                    bal=bal-withamount;
+                    data[2]=bal;
+                    localStorage.setItem(id,JSON.stringify([pass,acc,bal]));
+                    document.getElementById("balance").value=bal;
+                }
+            else
+                {
+                    alert("Insufficient Balance. You have "+bal+" $ left.")
+                }
+            }
+            
+		}
+		function transfer()
+		{
+			document.getElementById("trans_account").style.visibility = "visible";
+			document.getElementById("trans_account_text").style.visibility = "visible";
+			let tamount=document.getElementById("amount").value;
+			let taccount=document.getElementById("trans_account").value;
+			if(bal>tamount)
+			{
+                bal=data[2];
+                bal=bal-tamount;
+                data[2]=bal;
+                localStorage.setItem(id,JSON.stringify([pass,acc,bal]));
+                //how to add to othe user??
+			}
+			else if(tamount==null)
+			{   
+                alert("Insufficient amount entered.")
+			}
+            //else if(taccount==)hoe to find the new account now????
+			{   
+                alert("Account not found.")
+			}
+		}
+	</script>
+
+<body onload="show()">
+    <div class="background">
+    </div>
+    <div class="form">
+       
+
+	<h3>WELCOME!</h3>
+    <label for="acc_no">Account No.</label>
+    <input type="text" class="unstyled-input" placeholder="Account Number" id="acc_no">
+
+        <label for="amount">Amount</label>
+        <input type="text" class="unstyled-input" id="amount">
+
+        <label class="new" id="trans_account_text">Account No. to transfer money to:</label>	
+	<div>
+        <input type="password" class="new" placeholder="Transfer account number" id="trans_account">
+	</div>
+    <div class="flex-container">
+        <div><label class="dash" for="amount">Balance:</label></div>
+        <div><input type="text" class="butt" id="balance"></div>
+    </div>
+
+	<div class="divbutton">
+  	<button onclick="check()"class="button">Check Balance</button>
+	<button onclick="transfer()"class="button">Transfer</button>
+	</div>
+	<div class="divbutton">
+        <button class="button"onclick="withdraw()">Withdraw</button>
+     	<button class="button"onclick="deposit()">Deposit</button> 
+	</div>
+    </div>
+</body>
+</html>
